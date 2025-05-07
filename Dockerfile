@@ -1,5 +1,8 @@
 # Use official Python image
-FROM python:3.13
+FROM python:3.12
+
+# Install libGL for OpenCV support
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
 
 # Set working directory inside container
 WORKDIR /app

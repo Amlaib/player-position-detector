@@ -4,6 +4,9 @@ import math
 import csv
 import numpy as np
 
+# Check if running inside Docker
+running_in_docker = os.path.exists('/.dockerenv')
+
 class CentroidTracker:
     def __init__(self, max_distance=50):
         self.next_id = 0
@@ -102,7 +105,8 @@ def main():
             # Write to CSV
             csv_writer.writerow([int(cap.get(cv2.CAP_PROP_POS_FRAMES)), obj_id, cx, cy])
 
-        cv2.imshow('Player Position Detector - Tracking', frame)
+        if not running_in_docker:
+            cv2.imshow('Player Position Detector - Tracking', frame)
 
         output_video.write(frame)
 
