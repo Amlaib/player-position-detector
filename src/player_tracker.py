@@ -2,6 +2,7 @@ import cv2
 import os
 import math
 import csv
+import numpy as np
 
 class CentroidTracker:
     def __init__(self, max_distance=50):
@@ -57,6 +58,13 @@ def main():
     csv_writer = csv.writer(output_csv)
     csv_writer.writerow(['Frame', 'Object ID', 'X', 'Y'])
 
+    output_video = cv2.VideoWriter(
+        'player_tracking_output.mp4',
+        cv2.VideoWriter_fourcc(*'mp4v'),
+        25,  # Frames per second
+        (1600, 900)  # Frame size (same as your resized frame)
+    )
+
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -96,6 +104,8 @@ def main():
 
         cv2.imshow('Player Position Detector - Tracking', frame)
 
+        output_video.write(frame)
+
         if cv2.waitKey(25) & 0xFF == ord('q'):
             print("Exiting video display.")
             break
@@ -103,6 +113,9 @@ def main():
     cap.release()
     cv2.destroyAllWindows()
     output_csv.close()
+    output_video.release()
+    print("Tracking video saved as player_tracking_output.mp4")
+
 
 if __name__ == '__main__':
     main()

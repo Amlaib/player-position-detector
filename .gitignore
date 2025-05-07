@@ -4,3 +4,7 @@ __pycache__/
 .idea/
 .env
 videos/output.mp4
+player_positions.csv
+player_movements.png
+player_heatmap.png
+player_tracking_output.mp4
