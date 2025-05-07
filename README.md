@@ -1,88 +1,84 @@
 # Player Position Detector
 
-This project detects and tracks player positions in video files using Python and OpenCV.  
-It supports exporting player coordinates, visualizing movement paths, generating heatmaps, and creating annotated tracking videos.
+A Python-based player tracking system for football/soccer video analysis. Fully containerized using Docker.
 
 ## Features
 
-- Detects moving players in football/soccer video footage.
-- Marks and tracks players across frames with consistent IDs.
-- Saves player positions to CSV for analysis.
+- Detects and tracks moving players in football/soccer videos.
+- Consistent object IDs across frames.
+- CSV export of player positions.
 - Plots player movement paths.
-- Generates player heatmaps.
-- Exports tracking video with overlay rectangles and IDs.
-- Docker-ready for easy deployment.
+- Generates player position heatmaps.
+- Exports annotated tracking video.
+- Runs natively or in Docker containers.
 
-## Technologies Used
+## Technologies
 
-- Python 3.13.0
+- Python 3.12+
 - OpenCV
 - Matplotlib
 - Seaborn
 - Docker
 
-## How to Run
+## How to Run (Without Docker)
 
-### 1. Install dependencies:
+1. Install dependencies:
 
-```bash
-pip install -r requirements.txt
-```
-### 2. Place your input video:
-Add an MP4 video named input.mp4 inside the videos directory.
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-### 3. Run player tracking:
+2. Place your input video as `videos/input.mp4`.
 
-```bash
-python src/player_tracker.py
-```
+3. Run player tracking:
 
-Outputs:
-player_positions.csv
-player_tracking_output.mp4
+    ```bash
+    python src/player_tracker.py
+    ```
 
-### 4. Plot player movement paths:
+4. Plot movement paths:
 
-```bash
-python src/plot_player_positions.py
-```
+    ```bash
+    python src/plot_player_positions.py
+    ```
 
-Output:
-player_movements.png
+5. Generate heatmap:
 
-### 5. Generate player heatmap:
+    ```bash
+    python src/plot_player_heatmap.py
+    ```
 
-```bash
-python src/plot_player_heatmap.py
-```
+## How to Run (With Docker)
 
-Output:
-player_heatmap.png
+1. Pull the image:
 
-## Docker Usage
+    ```bash
+    docker pull amlaib/player-position-detector:latest
+    ```
 
-1. Build the Docker image:
+2. Run player tracking (replace `/path/to/local/folder` with your local folder):
 
-```bash
-docker build -t player-position-detector .
-```
+    ```bash
+    docker run --rm -it -v /path/to/local/folder:/app amlaib/player-position-detector:latest
+    ```
 
-2. Run the container:
+3. Run plotting scripts inside the container:
 
-```bash
-docker run --rm -it player-position-detector
-```
+    ```bash
+    docker run --rm -it -v /path/to/local/folder:/app amlaib/player-position-detector:latest python src/plot_player_positions.py
+    docker run --rm -it -v /path/to/local/folder:/app amlaib/player-position-detector:latest python src/plot_player_heatmap.py
+    ```
 
 ## Project Structure
 
 ```bash
 player-position-detector/
 ├── videos/
-│   └── input.mp4
+│ └── input.mp4
 ├── src/
-│   ├── player_tracker.py
-│   ├── plot_player_positions.py
-│   └── plot_player_heatmap.py
+│ ├── player_tracker.py
+│ ├── plot_player_positions.py
+│ └── plot_player_heatmap.py
 ├── requirements.txt
 ├── Dockerfile
 ├── README.md
